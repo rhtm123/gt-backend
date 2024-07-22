@@ -1,0 +1,262 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Receipt</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+
+        .receipt {
+            width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            text-align: center;
+        }
+
+        .logo img {
+            width: 160px;
+        }
+
+        .company-info {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .header {
+            text-align: center;
+            margin-top: 20px;
+        }
+        h1,h2, h3, h4, h5, h6 { 
+            font-weight: lighter;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            color: #444;
+            font-size: small;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+
+        .details {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .details p {
+            margin: 5px 0;
+        }
+
+        .product {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+
+        .product p {
+            margin: 0;
+        }
+
+        .total {
+            text-align: right;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .total p {
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+
+        .footer {
+            text-align: right;
+            margin-top: 20px;
+            /* font-size: 14px; */
+            /* color: #666; */
+        }
+
+        .notes {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .notes p {
+            margin: 5px 0;
+        }
+
+        .notes strong {
+            font-weight: bold;
+        }
+        .coupon {
+            
+            padding:  0px 4px;
+            border: 2px dotted lightgreen;
+            border-radius: 20px;  
+            
+        }
+        .footer .paid {
+            padding:8px;
+            border: 1px solid #ccc;
+            margin:0px;
+        }
+
+        .footer .remain {
+            padding:8px;
+            border: 1px solid #ccc;
+            border-top:none;
+            margin:0px;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt">
+        <div class="logo">
+            <img src="https://www.codingchaska.com/images/logo/logo.png" alt="Coding Chaska Logo">
+        </div>
+        <div class="company-info">
+            An initiative of Learning Setu Private Limited<br>
+            <a href="https://www.codingchaska.com" target="_blank">www.codingchaska.com</a>
+        </div>
+        <div class="header">
+            <h2>Payment Receipt</h2>
+        </div>
+        <div class="details">
+            <p><strong>To:</strong> {{ project_package.project.name }}</p>
+            <p><strong>Purchase ID:</strong> #{{ project_package.id }} </p>
+        </div>
+
+
+        <h3>Services</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Service Name</th>
+                    <th>Price</th>
+                    <th>Coupon</th>
+                    <th>Price After Discount</th>
+                </tr>
+            </thead>
+            <tbody>
+
+        {% for service in services %}
+
+        <td>{{ service.service.name }}</td>
+        
+
+
+        <td>₹{{ service.service.price }}</td>
+        <td> <span class="coupon"> {{ project_package.coupon.code }} </span></td>
+        <td>₹{{ service.service.price }}</td>
+    </tr>
+
+        {% endfor %}
+
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+
+
+        <div class="total">
+            <p><strong>Final Total: </strong>₹{{ project_package.price }}</p>
+        </div>
+
+
+        <h3>Payments</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Payment ID</th>
+
+                    <th>Payment Date</th>
+                    <th>Mode</th>
+                    <th>Amount</th>
+                    <th>Received</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in payments %}
+                <tr>
+                <td>#{{ payment.id }}</td>
+
+                <td>{{ payment.due_date }}</td>
+                <td>Cash</td>
+                <td>₹{{ payment.amount }}</td>
+                <td>
+                    {% if payment.is_paid %}
+                        <span style="color:green">Yes</span>
+                    {% else %}
+                        <span style="color:red">No</span>
+                    {% endif %}
+                </td>
+
+                </tr>
+                {% endfor %}
+
+            
+            </tbody>
+        </table>
+        
+
+        <div class="footer">
+            <p class="paid"><strong>Total Payment Received: </strong>₹{{ project_package.paid }}</p>
+            <!-- <p class="remain"><strong>Remaining: </strong>₹{{ total_remaining }}</p> -->
+        </div>
+        <div class="notes">
+            <p><strong>Notes:</strong></p>
+            <p>1. All types of taxes are included.</p>
+            <p>2. Please read our terms of service, payment & refund policy on our website.</p>
+            <p>3. For any enquiry, reach out via email at <strong>codingchaska.info@gmail.com</strong>, call on <strong>+91 9518901902</strong></p>
+            <br />
+            <p>Thank you.</p>
+            <p><strong>Rohit Maurya</strong></p>
+            <p><strong>Founder & Director</strong></p>
+
+            <img width="128" src="https://thelearningsetu.com/static/img/rohit_sign.png" alt="" />
+
+        </div>
+
+        <br >
+    </div>
+
+</body>
+</html>
