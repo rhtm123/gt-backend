@@ -155,7 +155,7 @@
             <a href="https://www.codingchaska.com" target="_blank">www.codingchaska.com</a>
         </div>
         <div class="header">
-            <h2>Payment Receipt</h2>
+            <h2>Invoice</h2>
         </div>
         <div class="details">
             <p><strong>To:</strong> {{ project_package.project.name }}</p>
@@ -184,7 +184,7 @@
 
         <td>₹{{ service.service.price }}</td>
         <td> <span class="coupon"> {{ project_package.coupon.code }} </span></td>
-        <td>₹{{ service.service.price }}</td>
+        <td>₹{{ service.price }}</td>
     </tr>
 
         {% endfor %}
@@ -198,49 +198,8 @@
             <p><strong>Final Total: </strong>₹{{ project_package.price }}</p>
         </div>
 
-
-        <h3>Payments</h3>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Payment ID</th>
-
-                    <th>Payment Date</th>
-                    <th>Mode</th>
-                    <th>Amount</th>
-                    <th>Received</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                {% for payment in payments %}
-                <tr>
-                <td>#{{ payment.id }}</td>
-
-                <td>{{ payment.due_date }}</td>
-                <td>Cash</td>
-                <td>₹{{ payment.amount }}</td>
-                <td>
-                    {% if payment.is_paid %}
-                        <span style="color:green">Yes</span>
-                    {% else %}
-                        <span style="color:red">No</span>
-                    {% endif %}
-                </td>
-
-                </tr>
-                {% endfor %}
-
-            
-            </tbody>
-        </table>
         
 
-        <div class="footer">
-            <p class="paid"><strong>Total Payment Received: </strong>₹{{ project_package.paid }}</p>
-            <!-- <p class="remain"><strong>Remaining: </strong>₹{{ total_remaining }}</p> -->
-        </div>
         <div class="notes">
             <p><strong>Notes:</strong></p>
             <p>1. All types of taxes are included.</p>

@@ -20,7 +20,7 @@ class Service(models.Model):
 
 class Package(models.Model):
     name = models.CharField(max_length=255)
-    price = models.IntegerField(null=True, blank=True)
+    # price = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -68,7 +68,7 @@ class ProjectPackage(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     package = models.ForeignKey(Package, on_delete=models.SET_NULL, null=True, blank=True)
 
-    price = models.IntegerField(default=0)
+    price = models.IntegerField(default=0, help_text="price after discount") # price after discount
     paid = models.IntegerField(default=0)
     coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, null=True, blank=True)
 
@@ -89,6 +89,7 @@ class ProjectPackageService(models.Model):
     project_package = models.ForeignKey(ProjectPackage, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True, blank=True)
 
+    price = models.IntegerField(default=0, help_text="price after discount") # price after discount
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -97,6 +98,7 @@ class ProjectPackageService(models.Model):
             package = self.project_package
             price = self.service.price 
             discount = self.project_package.coupon.discount
+            self.price = price*(100-discount)/100
             package.price = package.price + price*(100-discount)/100
             package.save()
             super(ProjectPackageService, self).save(*args, **kwargs)

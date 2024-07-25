@@ -43,14 +43,14 @@ class ProjectPackagePaymentInline(admin.TabularInline):
 
 class ProjectPackageAdmin(admin.ModelAdmin):
 
-    list_display = ('project', "print_payment_invoice", "print_payment_receipt")
+    list_display = ('project', "package" ,"price", "paid", "print_payment_invoice", "print_payment_receipt")
     def print_payment_invoice(self, obj):
-        return format_html(f'<a class="button" target="_blank" href="/project/payment-invoice/{obj.id}">Payment Invoice</a>')
+        return format_html(f'<a class="button" target="_blank" href="/project/payment-invoice/{obj.id}">Invoice</a>')
 
     print_payment_invoice.short_description = 'Action'
 
     def print_payment_receipt(self, obj):
-        return format_html(f'<a class="button" target="_blank" href="/project/payment-receipt/{obj.id}">Payment Receipt</a>')
+        return format_html(f'<a class="button" target="_blank" href="/project/payment-receipt/{obj.id}">Receipt</a>')
 
     print_payment_receipt.short_description = 'Action'
 
