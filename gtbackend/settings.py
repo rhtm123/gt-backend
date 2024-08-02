@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['68.183.95.120',]
+ALLOWED_HOSTS = ['68.183.95.120', '127.0.0.1']
 
 
 # Application definition
@@ -117,13 +117,14 @@ TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
+USE_THOUSAND_SEPARATOR = True
+
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -135,7 +136,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 
 STATIC_URL = '/static/'
-STATIC_URL = '/static/'#Location of static files
+# STATIC_URL = '/static/'#Location of static files
 STATICFILES_DIRS = [BASE_DIR / 'static', ]
 
 # Path where media is stored'

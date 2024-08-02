@@ -1,10 +1,13 @@
 
+{% load l10n %}
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Payment Receipt</title>
+    <meta name="robots" content="noindex">
+
+    <title>Payment Invoice</title>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -21,11 +24,15 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+            font-weight: bold;
         }
 
-        .logo img {
-            width: 160px;
+        .logo h2 {
+            padding-left: 6px;
         }
 
         .company-info {
@@ -117,7 +124,7 @@
         }
 
         .notes p {
-            margin: 5px 0;
+            margin: 2px 0;
         }
 
         .notes strong {
@@ -148,11 +155,12 @@
 <body>
     <div class="receipt">
         <div class="logo">
-            <img src="https://www.codingchaska.com/images/logo/logo.png" alt="Coding Chaska Logo">
+            <img width="30" src="/static/img/logo.png" alt="GrowTech Lab Logo">
+            <h2>GrowTech Lab</h2>
         </div>
         <div class="company-info">
             An initiative of Learning Setu Private Limited<br>
-            <a href="https://www.codingchaska.com" target="_blank">www.codingchaska.com</a>
+            <a href="https://www.growtechlab.com/" target="_blank">www.growtechlab.com</a>
         </div>
         <div class="header">
             <h2>Invoice</h2>
@@ -184,7 +192,7 @@
 
         <td>₹{{ service.service.price }}</td>
         <td> <span class="coupon"> {{ project_package.coupon.code }} </span></td>
-        <td>₹{{ service.price }}</td>
+        <td>₹{{ service.price|localize  }}</td>
     </tr>
 
         {% endfor %}
@@ -195,7 +203,7 @@
 
 
         <div class="total">
-            <p><strong>Final Total: </strong>₹{{ project_package.price }}</p>
+            <p><strong>Final Total: </strong>₹{{ project_package.price|localize  }}</p>
         </div>
 
         
@@ -204,14 +212,17 @@
             <p><strong>Notes:</strong></p>
             <p>1. All types of taxes are included.</p>
             <p>2. Please read our terms of service, payment & refund policy on our website.</p>
-            <p>3. For any enquiry, reach out via email at <strong>codingchaska.info@gmail.com</strong>, call on <strong>+91 9518901902</strong></p>
+            <p>3. For any enquiry, reach out via email at <strong>growtechlab7@gmail.com</strong>, call on <strong>+91 9518901902</strong></p>
             <br />
+
+        <div style="display: flex; flex-direction: column;   align-items:end">
             <p>Thank you.</p>
             <p><strong>Rohit Maurya</strong></p>
             <p><strong>Founder & Director</strong></p>
 
-            <img width="128" src="https://thelearningsetu.com/static/img/rohit_sign.png" alt="" />
-
+            <img width="92" src="https://thelearningsetu.com/static/img/rohit_sign.png" alt="" />
+            
+        </div>
         </div>
 
         <br >
