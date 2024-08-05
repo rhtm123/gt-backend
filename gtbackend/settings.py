@@ -137,6 +137,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_URL = '/static/'
 # STATIC_URL = '/static/'#Location of static files
-STATICFILES_DIRS = [BASE_DIR / 'static', ]
+# STATICFILES_DIRS = [BASE_DIR / 'static', ]
+STATIC_ROOT = BASE_DIR / 'static'
+
 
 # Path where media is stored'

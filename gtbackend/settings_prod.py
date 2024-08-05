@@ -18,4 +18,5 @@ from gtbackend.settings import *
 #     'API_KEY': config('CLN_API_KEY'),
 #     'API_SECRET': config('CLN_API_SECRET'),
 # }
+
 # DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
