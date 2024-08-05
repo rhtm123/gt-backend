@@ -1,6 +1,6 @@
 from gtbackend.settings import *
 
-
+ALLOWED_HOSTS = ['3.108.218.148',]
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
