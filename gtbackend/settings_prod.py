@@ -1,6 +1,6 @@
 from gtbackend.settings import *
 
-ALLOWED_HOSTS = ['13.232.76.204','backend.growtechlab.com','growtechlab.com', 'growtechlab.support']
+ALLOWED_HOSTS = ['15.206.123.92','backend.growtechlab.com','growtechlab.com', 'growtechlab.support']
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
