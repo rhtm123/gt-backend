@@ -22,6 +22,6 @@ def pages(request, page: int = Query(1), page_size: int = Query(10)):
 
 
 @router.get("/pages/{page_id}", response=PageSchemaOut)
-def blog(request, page_id: int):
+def page(request, page_id: int):
     page = get_object_or_404(Page, id=page_id)
     return page

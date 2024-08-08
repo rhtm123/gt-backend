@@ -26,6 +26,7 @@ from django.conf.urls.static import static
 from page.api import router as page_router
 
 from project.api import router as project_router
+from builder.api import router as builder_api
 
 from ninja import NinjaAPI
 
@@ -34,6 +35,7 @@ api = NinjaAPI()
 # api.add_router("blog/", blog_router)
 api.add_router("page/", page_router)
 api.add_router("project/", project_router)
+api.add_router("builder/", builder_api)
 
 
 urlpatterns = [

@@ -5,3 +5,4 @@ django-imagekit==5.0.0
 django-filter==24.2
 python-decouple==3.8
 psycopg2==2.9.9
+django-cors-headers==4.4.0
