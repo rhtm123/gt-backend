@@ -4,6 +4,8 @@ from django.contrib import admin
 from django.utils.html import format_html
 
 
+from django_summernote.admin import SummernoteModelAdmin
+
 from .models import ProjectPackagePayment, Technology, Project, Service, Package, ProjectPackage, ProjectPackageService
 
 
@@ -19,14 +21,12 @@ class ProjectPackageInline(admin.TabularInline):
     extra = 1
 
 
-class ProjectAdmin(admin.ModelAdmin):
-
+class ProjectAdmin(SummernoteModelAdmin):
     list_display = ('client',)
     list_filter = ('client',)
-
     inlines = [ProjectPackageInline,]
-
-
+    
+    summernote_fields = ('description',)  # Add this line
 
 admin.site.register(Project, ProjectAdmin)
 

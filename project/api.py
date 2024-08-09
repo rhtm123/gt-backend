@@ -12,17 +12,17 @@ router = Router()
 from extra.pagination import PaginatedResponseSchema, paginate_queryset
 
 
-# @router.get("/projects", response=PaginatedResponseSchema)
-# # @paginate(ProjectNumberPagination)
-# def projects(request, page: int = Query(1), page_size: int = Query(10)):
-#     qs = Project.objects.all()
-#     page_number = request.GET.get('page', 1)
-#     page_size = request.GET.get('page_size', 10)
+@router.get("/projects", response=PaginatedResponseSchema)
+# @paginate(ProjectNumberPagination)
+def projects(request, page: int = Query(1), page_size: int = Query(10)):
+    qs = Project.objects.select_related('client').prefetch_related('technology_used').all()
+    page_number = request.GET.get('page', 1)
+    page_size = request.GET.get('page_size', 10)
 
-#     return paginate_queryset(request, qs, ProjectSchema, page_number, page_size)
+    return paginate_queryset(request, qs, ProjectSchema, page_number, page_size)
 
 
-# @router.get("/projects/{page_id}", response=ProjectSchema)
-# def blog(request, project_id: int):
-#     project = get_object_or_404(Project, id=project_id)
-#     return project
+@router.get("/projects/{project_id}", response=ProjectSchema)
+def project(request, project_id: int):
+    project = Project.objects.select_related('client').prefetch_related('technology_used').get(id=project_id)
+    return project

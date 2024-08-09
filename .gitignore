@@ -13,6 +13,7 @@ latest.dump
 
 ## .env
 .ini
+.venv
 
 # C extensions
 *.so

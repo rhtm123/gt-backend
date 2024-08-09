@@ -50,7 +50,8 @@ class Project(models.Model):
     url = models.URLField(blank=True, null=True)
     github = models.URLField(blank=True, null=True)
 
-    img = ProcessedImageField(upload_to='gt/project/', processors=[ResizeToFill(1280, 720)], format='JPEG',options={'quality': 60 }, null=True,  blank=True)
+    img = ProcessedImageField(upload_to='gt/project/', format='JPEG',options={'quality': 60 }, null=True,  blank=True)
+    thumbnail = ProcessedImageField(upload_to='gt/project/', processors=[ResizeToFill(1280, 720)], format='JPEG',options={'quality': 60 }, null=True,  blank=True)
 
     published = models.BooleanField(default=False)
     domain_validity = models.DateField(null=True, blank=True)
