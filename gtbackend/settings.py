@@ -148,3 +148,30 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 
 # Path where media is stored'
+
+SUMMERNOTE_CONFIG = {
+    'iframe': True,
+
+    'summernote': {
+
+        # Change editor size
+        'width': '720',
+        'height': '480',
+
+        'lang': None,
+
+        # https://summernote.org/deep-dive/#custom-toolbar-popover
+        'toolbar': [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']],
+        ],
+
+    'lazy': True,
+}
+}
