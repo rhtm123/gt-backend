@@ -27,6 +27,7 @@ from page.api import router as page_router
 
 from project.api import router as project_router
 from builder.api import router as builder_api
+from account.api import router as account_api
 
 from ninja import NinjaAPI
 
@@ -36,7 +37,7 @@ api = NinjaAPI()
 api.add_router("page/", page_router)
 api.add_router("project/", project_router)
 api.add_router("builder/", builder_api)
-
+api.add_router("user/", account_api)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

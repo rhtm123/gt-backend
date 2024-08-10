@@ -23,10 +23,10 @@ def projects(request, page: int = Query(1), page_size: int = Query(10)):
     return paginate_queryset(request, qs, ProjectSchemaOut, page_number, page_size)
 
 
-@router.get("/projects/{page_id}", response=ProjectSchemaOut)
-def project(request, page_id: int):
-    page = get_object_or_404(Project, id=page_id)
-    return page
+@router.get("/projects/{project_id}", response=ProjectSchemaOut)
+def project(request, project_id: int):
+    projectObject = get_object_or_404(Project, id=project_id)
+    return projectObject
 
 
 
@@ -40,10 +40,10 @@ def builders(request, page: int = Query(1), page_size: int = Query(10)):
     return paginate_queryset(request, qs, BuilderSchemaOut, page_number, page_size)
 
 
-@router.get("/builders/{page_id}", response=BuilderSchemaOut)
-def builder(request, page_id: int):
-    page = get_object_or_404(Builder, id=page_id)
-    return page
+@router.get("/builders/{builder_id}", response=BuilderSchemaOut)
+def builder(request, builder_id: int):
+    builderObject = get_object_or_404(Builder, id=builder_id)
+    return builderObject
 
 
 
