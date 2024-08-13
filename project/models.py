@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from coupon.models import Coupon
 
 
-from extra.nginx_config import create_nginx_config, reload_nginx
+from extra.nginx_config import create_nginx_config, reload_nginx, delete_nginx_config
 
 # Create your models here.
 
@@ -84,13 +84,23 @@ class ProjectPackage(models.Model):
         return self.project.name + " " + self.package.name
     
     def save(self, *args, **kwargs):
-
         if self.project.domain:
             create_nginx_config("admin."+self.project.domain, self.project.domain)
             reload_nginx()
-
         
         super(ProjectPackage, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        # Custom actions before deletion
+        print(f"Deleting instance {self.name}")
+        delete_nginx_config(self.project.domain)
+        reload_nginx()
+
+        # Call the parent class's delete method to perform the actual deletion
+        super(ProjectPackage, self).delete(*args, **kwargs)
+
+        # Custom actions after deletion
+        print(f"Instance {self.name} deleted")
 
     # def save(self, *args, **kwargs):
     #     if self.pk is None:

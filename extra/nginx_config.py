@@ -66,21 +66,24 @@ def create_nginx_config(subdomain, project_name):
 
 def delete_nginx_config(project_name):
     # Remove the symbolic link to disable the Nginx configuration
-    disable_command = f"rm /etc/nginx/sites-enabled/{project_name}"
+    # disable_command = f"rm /etc/nginx/sites-enabled/{project_name}"
     #site_enabled_file = f"/etc/nginx/sites-enabled/{project_name}"
     #os.remove(site_enabled_file)
 
-    run_process(disable_command, "/home/rohit/gtbackend/temp/outcome3.txt")
+    subprocess.run(['/home/rohit/gtbackend/setup.sh', 'delete', project_name])
+
+
+    # run_process(disable_command, "/home/rohit/gtbackend/temp/outcome3.txt")
     
-    # Delete the configuration file
-    config_file_path = f"/etc/nginx/sites-available/{project_name}"
-    #os.remove(config_file_path)
+    # # Delete the configuration file
+    # config_file_path = f"/etc/nginx/sites-available/{project_name}"
+    # #os.remove(config_file_path)
 
-    #temp_file = f"/home/rohit/gtbackend/temp/{project_name}"
-    #os.remove(temp_file)
+    # #temp_file = f"/home/rohit/gtbackend/temp/{project_name}"
+    # #os.remove(temp_file)
 
-    run_process( f"rm {config_file_path}" ,"/home/rohit/gtbackend/temp/outcome4.txt")
-    run_process( f"rm /home/rohit/gtbackend/temp/{project_name}" ,"/home/rohit/gtbackend/temp/outcome4.txt")
+    # run_process( f"rm {config_file_path}" ,"/home/rohit/gtbackend/temp/outcome4.txt")
+    # run_process( f"rm /home/rohit/gtbackend/temp/{project_name}" ,"/home/rohit/gtbackend/temp/outcome4.txt")
     print("NGINX files deleted")
     # subprocess.run(f"sudo rm {config_file_path}", shell=True, check=True)
 
