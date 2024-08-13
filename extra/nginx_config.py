@@ -65,6 +65,7 @@ def create_nginx_config(subdomain, project_name):
     # subprocess.run(enable_command, shell=True, check=True)
 
 def delete_nginx_config(project_name):
+    print("NGINX files deleted stated", project_name)
 
     subprocess.run(['/home/rohit/gtbackend/setup.sh', 'delete', project_name])
 

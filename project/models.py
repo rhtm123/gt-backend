@@ -93,6 +93,7 @@ class ProjectPackage(models.Model):
     def delete(self, *args, **kwargs):
         # Custom actions before deletion
         # print(f"Deleting instance {self.name}")
+        print("deleting instance")
         delete_nginx_config(self.project.domain)
         reload_nginx()
 
