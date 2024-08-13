@@ -92,15 +92,14 @@ class ProjectPackage(models.Model):
 
     def delete(self, *args, **kwargs):
         # Custom actions before deletion
-        print(f"Deleting instance {self.name}")
+        # print(f"Deleting instance {self.name}")
         delete_nginx_config(self.project.domain)
         reload_nginx()
 
-        # Call the parent class's delete method to perform the actual deletion
         super(ProjectPackage, self).delete(*args, **kwargs)
 
         # Custom actions after deletion
-        print(f"Instance {self.name} deleted")
+        # print(f"Instance {self.name} deleted")
 
     # def save(self, *args, **kwargs):
     #     if self.pk is None:
