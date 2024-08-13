@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from coupon.models import Coupon
 
 
+from extra.nginx_config import create_nginx_config, reload_nginx
+
 # Create your models here.
 
 class Service(models.Model):
@@ -48,6 +50,7 @@ class Project(models.Model):
     short_description = models.TextField(blank=True, null=True)
     description = models.TextField()
     url = models.URLField(blank=True, null=True)
+    domain = models.CharField(max_length=255, null=True, blank=True)
     github = models.URLField(blank=True, null=True)
 
     img = ProcessedImageField(upload_to='gt/project/', format='JPEG',options={'quality': 60 }, null=True,  blank=True)
@@ -79,6 +82,15 @@ class ProjectPackage(models.Model):
 
     def __str__(self):
         return self.project.name + " " + self.package.name
+    
+    def save(self, *args, **kwargs):
+
+        if self.project.domain:
+            create_nginx_config("admin."+self.project.domain, self.project.domain)
+            reload_nginx()
+
+        
+        super(ProjectPackage, self).save(*args, **kwargs)
 
     # def save(self, *args, **kwargs):
     #     if self.pk is None:

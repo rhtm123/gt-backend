@@ -5,7 +5,7 @@ from django.conf import settings
 from django.template.defaultfilters import slugify
 
 
-# Create your models here.
+# This is project created by user
 class Project(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255,null=True, blank=True)
@@ -25,7 +25,7 @@ class Project(models.Model):
         self.slug = slugify(self.name)
         super(Project, self).save(*args, **kwargs)
 
-
+### This is pre-save json format
 class Builder(models.Model):
     name = models.CharField(max_length=255)
     jsondom = models.TextField()

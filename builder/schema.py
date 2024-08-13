@@ -6,6 +6,8 @@ from datetime import datetime  # Import datetime
 from .models import Builder, Project
 from account.schema import UserSchemaOut
 
+from typing import Optional, Union
+
 
 class ProjectSchemaOut(Schema):
     id: int  # Optional for output, required for update
@@ -18,6 +20,16 @@ class ProjectSchemaOut(Schema):
 
     created: datetime
     updated: datetime
+
+    class Config:
+        model = Project
+
+
+class ProjectSchemaIn(Schema):
+    name: Optional[str] = None
+    jsondom: Optional[str] = None
+    is_published: Optional[bool] = False
+    creator: Optional[int] = None  # Allow either user ID or username
 
     class Config:
         model = Project
