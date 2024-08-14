@@ -85,22 +85,15 @@ class ProjectPackage(models.Model):
     
     def save(self, *args, **kwargs):
         if self.project.domain:
-            create_nginx_config("admin."+self.project.domain, self.project.domain)
-            reload_nginx()
-        
+            try:
+                create_nginx_config("admin."+self.project.domain, self.project.domain)
+                reload_nginx()
+            except:
+                pass 
+
         super(ProjectPackage, self).save(*args, **kwargs)
 
-    def delete(self, *args, **kwargs):
-        # Custom actions before deletion
-        # print(f"Deleting instance {self.name}")
-        print("deleting instance")
-        delete_nginx_config(self.project.domain)
-        reload_nginx()
 
-        super(ProjectPackage, self).delete(*args, **kwargs)
-
-        # Custom actions after deletion
-        # print(f"Instance {self.name} deleted")
 
     # def save(self, *args, **kwargs):
     #     if self.pk is None:
