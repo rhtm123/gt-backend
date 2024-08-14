@@ -10,6 +10,10 @@ from .models import ProjectPackagePayment, Technology, Project, Service, Package
 
 from extra.nginx_config import delete_nginx_config, reload_nginx
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 admin.site.register(Package)
 # admin.site.register(Project)
@@ -60,13 +64,13 @@ class ProjectPackageAdmin(admin.ModelAdmin):
     inlines = (ProjectPackageServiceInline, ProjectPackagePaymentInline)
 
     def delete_model(self, request, obj):
-        # Call the model's delete method
-        print("deleting instance")
+        logger.info("Attempting to delete instance")
         try:
-            delete_nginx_config(obj.project.domain)  # Accessing the project domain from the obj
+            delete_nginx_config(obj.project.domain)
             reload_nginx()
+            logger.info("Nginx config deleted and reloaded for domain: %s", obj.project.domain)
         except Exception as e:
-            print(f"Error while deleting nginx config: {e}")
+            logger.error(f"Error while deleting nginx config: {e}")
         obj.delete()
 
 admin.site.register(ProjectPackage, ProjectPackageAdmin)
