@@ -21,7 +21,7 @@ def run_process(cmd, filename):
 def create_nginx_config(subdomain, project_name):
     # Create an Nginx configuration file for the container
     nginx_config = f"""
-    server {{
+server {{
     listen 80;
     server_name {subdomain} ;
 
@@ -39,33 +39,21 @@ def create_nginx_config(subdomain, project_name):
         location = /50x.html {{
             root /usr/share/nginx/html;
         }}
-    }}
+}}
     """
     # Write the configuration to a file
     temp_file = f"/home/rohit/gtbackend/temp/{project_name}"
     with open(temp_file, "w") as config_file:
         config_file.write(nginx_config)
 
-    # config_file_path = "/etc/nginx/sites-available/" + project_name
-    #shutil.copy(temp_file, sites_available)
-
     print("Config file created")
 
     subprocess.run(['/home/rohit/gtbackend/setup.sh', 'create', project_name])
-# subprocess.run(['/path/to/your/script.sh', 'reload'])
 
-
-    # Create a symbolic link to enable the Nginx configuration
-    # enable_command = f"sudo ln -s {config_file_path} /etc/nginx/sites-enabled/"
-    # #sites_enabled = "/etc/nginx/sites-enabled/"+project_name
-    # # os.symlink(sites_available, sites_enabled)
-    # run_process(f"cp /home/rohit/gtbackend/temp/{project_name} /etc/nginx/sites-available/", "/home/rohit/gtbackend/temp/outcome7.txt")
-    # run_process( enable_command, "/home/rohit/gtbackend/temp/outcome5.txt")
     print("Symbolic link created")
-    # subprocess.run(enable_command, shell=True, check=True)
 
 def delete_nginx_config(project_name):
-    print("NGINX files deleted stated", project_name)
+    print("NGINX files deleted started", project_name)
 
     subprocess.run(['/home/rohit/gtbackend/setup.sh', 'delete', project_name])
 
@@ -74,7 +62,6 @@ def delete_nginx_config(project_name):
 
 def reload_nginx():
     # Test Nginx configuration and reload if it's valid
-    # run_process("nginx -t", "/home/rohit/gtbackend/temp/outcome1.txt")
     subprocess.run(['/home/rohit/gtbackend/setup.sh', 'reload'])
 
     # run_process("systemctl restart nginx", "/home/rohit/gtbackend/temp/outcome2.txt")
