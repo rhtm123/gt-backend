@@ -60,18 +60,8 @@ class ProjectPackageAdmin(admin.ModelAdmin):
         return format_html(f'<a class="button" target="_blank" href="/project/payment-receipt/{obj.id}">Receipt</a>')
 
     print_payment_receipt.short_description = 'Action'
-
     inlines = (ProjectPackageServiceInline, ProjectPackagePaymentInline)
 
-    def delete_model(self, request, obj):
-        logger.info("Attempting to delete instance")
-        try:
-            delete_nginx_config(obj.project.domain)
-            reload_nginx()
-            logger.info("Nginx config deleted and reloaded for domain: %s", obj.project.domain)
-        except Exception as e:
-            logger.error(f"Error while deleting nginx config: {e}")
-        obj.delete()
 
 admin.site.register(ProjectPackage, ProjectPackageAdmin)
 

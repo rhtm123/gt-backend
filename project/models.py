@@ -3,13 +3,13 @@ from imagekit.models import ProcessedImageField # type: ignore
 from imagekit.processors import ResizeToFill # type: ignore
 
 from django.template.defaultfilters import slugify
-
 from django.contrib.auth.models import User
-
 from coupon.models import Coupon
 
 
 from extra.nginx_config import create_nginx_config, reload_nginx, delete_nginx_config
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -93,13 +93,17 @@ class ProjectPackage(models.Model):
 
         super(ProjectPackage, self).save(*args, **kwargs)
 
+@receiver(pre_delete, sender=ProjectPackage)
+def handle_project_package_delete(sender, instance, **kwargs):
+    print("Deleting object..")
+    try:
+        # Replace with your custom logic to delete and reload Nginx config
+        delete_nginx_config(instance.project.domain)
+        reload_nginx()
+    except Exception as e:
+        # You can log the error or handle it as needed
+        print(f"Error while deleting nginx config: {e}")
 
-
-    # def save(self, *args, **kwargs):
-    #     if self.pk is None:
-    #         if (self.package and self.coupon):
-    #             self.price = self.package.price - self.package.price*self.coupon.discount/100
-    #         super(Project, self).save(*args, **kwargs)
 
 class ProjectPackageService(models.Model):
     project_package = models.ForeignKey(ProjectPackage, on_delete=models.CASCADE)
