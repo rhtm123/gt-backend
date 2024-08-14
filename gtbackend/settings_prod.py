@@ -5,8 +5,7 @@ from gtbackend.settings import *
 ALLOWED_HOSTS += ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
-    "*"
-    # 'https://gt.thelearningsetu.com',
+    'https://gt.thelearningsetu.com',
     # Add other domains as needed
 ]
 
