@@ -3,10 +3,24 @@ from ninja import Schema
 from typing import Optional, List
 from datetime import datetime  # Import datetime
 
-from .models import Builder, Project
+from .models import Builder, Project, ClassAllValues
 from account.schema import UserSchemaOut
 
 from typing import Optional, Union
+
+
+class ClassAllValuesSchemaOut(Schema):
+    id: int 
+    name: str
+    all_values: str
+    type: str
+
+    created: datetime
+    updated: datetime
+
+    class Config:
+        model = ClassAllValues
+
 
 
 class ProjectSchemaOut(Schema):

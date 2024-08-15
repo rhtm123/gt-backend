@@ -87,7 +87,7 @@ class ProjectPackage(models.Model):
         if self.project.domain:
             try:
                 create_nginx_config("admin."+self.project.domain, self.project.domain)
-                reload_nginx()
+                # reload_nginx()
             except:
                 pass 
 
@@ -99,7 +99,7 @@ def handle_project_package_delete(sender, instance, **kwargs):
     try:
         # Replace with your custom logic to delete and reload Nginx config
         delete_nginx_config(instance.project.domain)
-        reload_nginx()
+        # reload_nginx()
     except Exception as e:
         # You can log the error or handle it as needed
         print(f"Error while deleting nginx config: {e}")

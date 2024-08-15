@@ -41,3 +41,20 @@ class Builder(models.Model):
 
     def __str__(self):
         return self.name
+
+CLASSTYPES = (
+    ('tailwind', 'tailwind'),
+    ('daisyui', 'daisyui'),
+)
+
+class ClassAllValues(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    all_values = models.TextField()
+
+    type = models.CharField(max_length=255, choices=CLASSTYPES, default="tailwind")
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name

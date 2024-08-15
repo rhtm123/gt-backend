@@ -1,15 +1,15 @@
 
 
-from .models import Builder, Project
+from .models import Builder, Project, ClassAllValues
 from ninja import  Router, Query
 from django.shortcuts import get_object_or_404
-from .schema import BuilderSchemaOut, ProjectSchemaOut, ProjectSchemaIn
+from .schema import BuilderSchemaOut, ProjectSchemaOut, ProjectSchemaIn, ClassAllValuesSchemaOut
 # from typing import List
 
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
-from typing import Optional, Union
+from typing import Optional
 
 
 
@@ -18,10 +18,25 @@ router = Router()
 from extra.pagination import PaginatedResponseSchema, paginate_queryset
 
 
+
+@router.get("/class-all-values", response=PaginatedResponseSchema)
+# @paginate(PageNumberPagination)
+def class_all_values_list(request, page: int = Query(1), page_size: int = Query(10)):
+    qs = ClassAllValues.objects.all()
+    page_number = request.GET.get('page', 1)
+    page_size = request.GET.get('page_size', 10)
+    return paginate_queryset(request, qs, ClassAllValuesSchemaOut, page_number, page_size)
+
+@router.get("/class-all-values/{name}", response=ClassAllValuesSchemaOut)
+def class_all_values_get(request, name: str):
+    obj = get_object_or_404(ClassAllValues, name=name)
+    return obj
+
+
+
 def get_creator(creator_info: Optional[int]):
     if creator_info is None:
         return None
-    
     else:  # Assume it's a username
         return get_object_or_404(User, id=creator_info)
     
@@ -107,10 +122,12 @@ def builder(request, builder_id: int):
 
 from bs4 import BeautifulSoup
 from pydantic import BaseModel
-
+from extra.builder import determine_key
 
 class HTMLInput(BaseModel):
     html: str
+
+
 
 
 def html_to_json(html):
@@ -157,18 +174,7 @@ def html_to_json(html):
             key = determine_key(class_name)
             styles[key] = class_name
         return styles
-
-    def determine_key(class_name):
-        if class_name.startswith("text-"):
-            if class_name in ["text-left", "text-center", "text-right", "text-justify"]:
-                return "text-align"
-            else:
-                return "text-size"
-        elif class_name.startswith("border-"):
-            return class_name.split("-")[0] + "-" + class_name.split("-")[1]
-        else:
-            return class_name.split("-")[0]
-
+    
     # Parse the HTML
     soup = BeautifulSoup(html, "html.parser")
 
