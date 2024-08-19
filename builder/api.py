@@ -11,6 +11,11 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 from typing import Optional
 
+from bs4 import BeautifulSoup
+from pydantic import BaseModel
+from extra.builder import determine_key
+
+from django.http import HttpResponsePermanentRedirect
 
 
 router = Router()
@@ -43,11 +48,14 @@ def get_creator(creator_info: Optional[int]):
 
 @router.get("/projects", response=PaginatedResponseSchema)
 # @paginate(PageNumberPagination)
-def projects(request, page: int = Query(1), page_size: int = Query(10)):
+def projects(request, page: int = Query(1), page_size: int = Query(10), creator_id: int = Query(None)):
     qs = Project.objects.all()
+
     page_number = request.GET.get('page', 1)
     page_size = request.GET.get('page_size', 10)
 
+    if creator_id:
+        qs = qs.filter(creator=creator_id)
     return paginate_queryset(request, qs, ProjectSchemaOut, page_number, page_size)
 
 
@@ -104,10 +112,19 @@ def update_project(request, project_id: int, data: ProjectSchemaIn):
     return project
 
 
+@router.delete("/projects/{project_id}/")
+def delete_project(request, project_id: int):
+    project = get_object_or_404(Project, id=project_id)
+    project.delete()
+    return {"success": True}
+
+
 @router.get("/builders", response=PaginatedResponseSchema)
 # @paginate(PageNumberPagination)
-def builders(request, page: int = Query(1), page_size: int = Query(10)):
+def builders(request, page: int = Query(1), page_size: int = Query(10), creator_id: int = Query(None)):
     qs = Builder.objects.all()
+    if creator_id is not None:
+        qs = qs.filter(creator=creator_id)
     page_number = request.GET.get('page', 1)
     page_size = request.GET.get('page_size', 10)
 
@@ -120,9 +137,14 @@ def builder(request, builder_id: int):
     return builderObject
 
 
-from bs4 import BeautifulSoup
-from pydantic import BaseModel
-from extra.builder import determine_key
+@router.delete("/builders/{builder_id}/")
+def delete_Builder(request, builder_id: int):
+    obj = get_object_or_404(Builder, id=builder_id)
+    obj.delete()
+    return {"success": True}
+
+
+
 
 class HTMLInput(BaseModel):
     html: str
