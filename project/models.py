@@ -53,8 +53,8 @@ class Project(models.Model):
     domain = models.CharField(max_length=255, null=True, blank=True)
     github = models.URLField(blank=True, null=True)
 
-    img = ProcessedImageField(upload_to='gt/project/', format='JPEG',options={'quality': 60 }, null=True,  blank=True)
-    thumbnail = ProcessedImageField(upload_to='gt/project/', processors=[ResizeToFill(1280, 720)], format='JPEG',options={'quality': 60 }, null=True,  blank=True)
+    img = ProcessedImageField(upload_to='gt/project/', format='JPEG',options={'quality': 75 }, null=True,  blank=True)
+    thumbnail = ProcessedImageField(upload_to='gt/project/', processors=[ResizeToFill(1280, 720)], format='JPEG',options={'quality': 75 }, null=True,  blank=True)
 
     published = models.BooleanField(default=False)
     domain_validity = models.DateField(null=True, blank=True)
@@ -67,6 +67,14 @@ class Project(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+class ProjectImage(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    img = ProcessedImageField(upload_to='gt/project/', processors=[ResizeToFill(720, 720)], format='JPEG',options={'quality': 75 }, null=True,  blank=True)
+    alt_text = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self) -> str:
+        return self.project.name
 
 class ProjectPackage(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)

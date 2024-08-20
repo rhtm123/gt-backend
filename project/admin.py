@@ -6,13 +6,15 @@ from django.utils.html import format_html
 
 from django_summernote.admin import SummernoteModelAdmin
 
-from .models import ProjectPackagePayment, Technology, Project, Service, Package, ProjectPackage, ProjectPackageService
+from .models import ProjectImage, ProjectPackagePayment, Technology, Project, Service, Package, ProjectPackage, ProjectPackageService
 
 from extra.nginx_config import delete_nginx_config, reload_nginx
 
-import logging
+# import logging
 
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
+
+
 
 
 admin.site.register(Package)
@@ -36,6 +38,7 @@ class ProjectAdmin(SummernoteModelAdmin):
 
 admin.site.register(Project, ProjectAdmin)
 
+admin.site.register(ProjectImage)
 
 
 class ProjectPackageServiceInline(admin.TabularInline):

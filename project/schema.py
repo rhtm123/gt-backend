@@ -2,12 +2,18 @@
 from typing import Optional, List
 # from datetime import datetime  # Import datetime
 
-from .models import Project
+from .models import Project, ProjectImage
 # from account.schema import UserSchemaOut
 
 # from .models import Category
 from ninja import ModelSchema, Schema
 from django.core.validators import URLValidator
+
+
+class ProjectImageSchema(ModelSchema):
+    class Meta:
+        model = ProjectImage
+        fields = "__all__"
 
 # Define a schema for the User model
 class UserSchema(Schema):
@@ -22,8 +28,6 @@ class TechnologySchema(Schema):
     icon: Optional[str] = None
 
 class ProjectSchema(ModelSchema):
-    
-    
     class Meta:
         model = Project
         fields = '__all__'  # Include all fields by default
