@@ -193,11 +193,17 @@ def html_to_json(html):
         styles = {}
         class_list = element.get("class", [])
         for class_name in class_list:
-            # print(class_name)
-            key = determine_key(class_name)
+            # print(class_name) md:text-lg text-xl
+            values = class_name.split(":")
+            if len(values)==1:
+                key = determine_key(class_name)
+                styles[key] = class_name
+            else:
+                prefix, class_value = values[0],values[1]
+                key = determine_key(class_value)
+                styles[prefix+":"+key] = class_name
             # print(class_name, key, class_name)
-            styles[key] = class_name
-        print(styles)
+        # print(styles)
         return styles
     
     # Parse the HTML
