@@ -1,4 +1,3 @@
-
 def determine_key(class_name):
     class_name = class_name.strip()
     parts = class_name.split('-')
@@ -28,11 +27,31 @@ def determine_key(class_name):
     if class_name in special_cases:
         return special_cases[class_name]
 
+    # Handle font size cases (text-xs, text-sm, etc.)
+    font_size_classes = {
+        "text-xs": "font-size",
+        "text-sm": "font-size",
+        "text-base": "font-size",
+        "text-lg": "font-size",
+        "text-xl": "font-size",
+        "text-2xl": "font-size",
+        "text-3xl": "font-size",
+        "text-4xl": "font-size",
+        "text-5xl": "font-size",
+        "text-6xl": "font-size",    
+        "text-7xl": "font-size",
+        "text-8xl": "font-size",
+        "text-9xl": "font-size",
+    }
+
+    if class_name in font_size_classes:
+        return font_size_classes[class_name]
+
     # General prefix to CSS property mapping
     prefix_map = {
         "text": "color",
         "bg": "background-color",
-        "border": "border-width",
+        "border": "border-width",  # Default case for border
         "font": "font-weight",
         "w": "width",
         "h": "height",
@@ -103,21 +122,23 @@ def determine_key(class_name):
         "animate": "animation"
     }
 
-    # Handle border classes with specific side and color
+    # Handle border color and border style specifically
     if parts[0] == "border":
-        if len(parts) == 2:  # Case like "border-2"
-            return "border-width"
-        elif len(parts) == 3:
-            if parts[1] in {"t", "r", "b", "l"}:  # Case like "border-t-2"
-                return f"border-{parts[1]}-width"
-            elif parts[1] == "color":  # Case like "border-color-red"
+        if len(parts) == 2:  # Case like "border-solid" or "border-red-500"
+            if parts[1] in ["solid", "dashed", "dotted", "double"]:  # Border style
+                return "border-style"
+            if len(parts) == 3 and parts[1].isdigit():  # Border width
+                return "border-width"
+            else:  # Assuming it's a color class
                 return "border-color"
-        elif len(parts) == 4 and parts[1] in {"t", "r", "b", "l"}:  # Case like "border-t-color-red"
-            return f"border-{parts[1]}-color"
+        elif len(parts) == 3 and parts[1] in {"t", "r", "b", "l"}:  # Case like "border-t-red"
+            return f"border-{parts[1]}-width"
+        elif len(parts) == 3:  # Handle "border-red" border color shorthand
+            return "border-color"
 
     # Handle color-related classes like "bg-red-500" or "text-blue-600"
     if len(parts) == 3 and parts[0] in {"bg", "text", "border", "ring", "divide"}:
-        if parts[1].isdigit() == False:  # Check if the second part is not a number to differentiate from sizes
+        if not parts[1].isdigit():  # Check if the second part is not a number to differentiate from sizes
             return f"{prefix_map[parts[0]]}"
 
     # Handle general cases using "".join(parts[:-1])
@@ -133,7 +154,7 @@ def determine_key(class_name):
 # print(determine_key("border-red-200"))
 # print(determine_key("ml-2"))  # Output: marginLeft
 # print(determine_key("flex"))  # Output: display
-# print(determine_key("bg-red-500"))  # Output: background-color
+# print(determine_key("text-xs"))  # Output: background-color
 # # print(determine_key("rounded-lg"))  # Output: border-radius
 # # print(determine_key("w-full"))  # Output: width
 # print(determine_key("space-x-4"))  # Output: space-x
