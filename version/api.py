@@ -14,15 +14,6 @@ from extra.pagination import PaginatedResponseSchema, paginate_queryset
 router = Router()
 
 
-@router.get("/class-all-values", response=PaginatedResponseSchema)
-# @paginate(PageNumberPagination)
-def class_all_values_list(request, page: int = Query(1), page_size: int = Query(10)):
-    qs = ClassAllValues.objects.all()
-    page_number = request.GET.get('page', 1)
-    page_size = request.GET.get('page_size', 10)
-    return paginate_queryset(request, qs, ClassAllValuesSchemaOut, page_number, page_size)
-
-
 @router.get("/versions", response=PaginatedResponseSchema)
 def list_versions(request, page: int = Query(1), page_size: int = Query(10), app_name: str = None, search: str = None, ordering: str = None):
     queryset = Version.objects.all()
