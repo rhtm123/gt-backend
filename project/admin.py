@@ -34,8 +34,10 @@ class ProjectImageInline(admin.TabularInline):
 
 
 class ProjectAdmin(SummernoteModelAdmin):
-    list_display = ('client',)
-    list_filter = ('client',)
+    list_display = ('name', 'client', 'published', 'domain_validity', 'created')
+    list_filter = ('client', 'published')
+    search_fields = ('name',)
+    list_editable = ('published', 'domain_validity')
     inlines = [ProjectPackageInline,ProjectImageInline]
 
     
