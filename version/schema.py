@@ -8,6 +8,7 @@ class VersionSchema(Schema):
     app_name: str
     slug: str
     release_date: date
+    is_published: bool
     created: datetime
     updated: datetime
 

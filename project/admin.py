@@ -8,7 +8,7 @@ from django_summernote.admin import SummernoteModelAdmin
 
 from .models import ProjectImage, ProjectPackagePayment, Technology, Project, Service, Package, ProjectPackage, ProjectPackageService
 
-from extra.nginx_config import delete_nginx_config, reload_nginx
+# from extra.nginx_config import delete_nginx_config, reload_nginx
 
 # import logging
 
@@ -28,11 +28,16 @@ class ProjectPackageInline(admin.TabularInline):
     model = ProjectPackage
     extra = 1
 
+class ProjectImageInline(admin.TabularInline):
+    model = ProjectImage
+    extra = 1
+
 
 class ProjectAdmin(SummernoteModelAdmin):
     list_display = ('client',)
     list_filter = ('client',)
-    inlines = [ProjectPackageInline,]
+    inlines = [ProjectPackageInline,ProjectImageInline]
+
     
     summernote_fields = ('description',)  # Add this line
 

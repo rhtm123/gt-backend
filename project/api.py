@@ -14,8 +14,18 @@ from extra.pagination import PaginatedResponseSchema, paginate_queryset
 
 @router.get("/projects", response=PaginatedResponseSchema)
 # @paginate(ProjectNumberPagination)
-def projects(request, page: int = Query(1), page_size: int = Query(10)):
+def projects(request, page: int = Query(1), page_size: int = Query(10),  search: str = None, ordering: str = None, published: bool = None):
     qs = Project.objects.select_related('client').prefetch_related('technology_used').all()
+    # print(qs)
+
+    if search:
+        qs = qs.filter(name__icontains=search)
+    if published is not None:
+        qs = qs.filter(published=published)
+    if ordering:
+        qs = qs.order_by(ordering)
+    
+
     page_number = request.GET.get('page', 1)
     page_size = request.GET.get('page_size', 10)
 
