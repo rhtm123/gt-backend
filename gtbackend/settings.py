@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'project.apps.ProjectConfig',
     'coupon.apps.CouponConfig',
     "builder.apps.BuilderConfig",
+    "version.apps.VersionConfig",
 ]
 
 MIDDLEWARE = [

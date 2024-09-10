@@ -37,8 +37,10 @@ class Package(models.Model):
 
 
 class Technology(models.Model):
-    icon = models.TextField(null=True, blank=True)
+    # icon = models.TextField(null=True, blank=True) # URL of an image
     name = models.CharField(max_length=255)
+    official_site = models.URLField(null=True, blank=True)
+    icon = ProcessedImageField(upload_to='gt/project/', processors=[ResizeToFill(240, 240)], format='JPEG',options={'quality': 75 }, null=True,  blank=True)
 
     def __str__(self):
         return self.name
