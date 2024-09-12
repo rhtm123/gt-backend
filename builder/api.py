@@ -67,13 +67,12 @@ def create_project(request, data: ProjectSchemaIn):
     if data.jsondom is None:
         data.jsondom = r"""
         {
-            "type": "main",
+            "type": "div",
             "id": "1",
             "attributes": {
                 "class": ""
             },
             "styles": {
-                "bg": "bg-base-100"
             },
             "children": []
         }
