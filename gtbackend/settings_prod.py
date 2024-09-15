@@ -2,12 +2,14 @@ from gtbackend.settings import *
 
 # ALLOWED_HOSTS = ['15.206.123.92','backend.growtechlab.com','growtechlab.com', 'growtechlab.support']
 
-ALLOWED_HOSTS += ["*"]
+ALLOWED_HOSTS += ["cms.growtechlab.com", "growtechlab.com"]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://gt.thelearningsetu.com',
     # Add other domains as needed
 ]
+
+
 
 
 DATABASES = {
