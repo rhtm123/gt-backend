@@ -93,15 +93,15 @@ def determine_key(class_name):
         "gap": "gap",
         "order": "order",
         "p": "padding",
-        "py": "padding-vertical",
-        "px": "padding-horizontal",
+        "py": "padding-y",
+        "px": "padding-x",
         "pt": "padding-top",
         "pb": "padding-bottom",
         "pl": "padding-left",
         "pr": "padding-right",
         "m": "margin",
-        "my": "margin-vertical",
-        "mx": "margin-horizontal",
+        "my": "margin-y",
+        "mx": "margin-x",
         "mt": "margin-top",
         "mb": "margin-bottom",
         "ml": "margin-left",
@@ -162,7 +162,7 @@ def determine_key(class_name):
 
 # Examples
 # print(determine_key("border-red-200"))
-# print(determine_key("ml-2"))  # Output: marginLeft
+# print(determine_key("mx-2"))  # Output: marginLeft
 # print(determine_key("flex"))  # Output: display
 # print(determine_key("text-xs"))  # Output: background-color
 # # print(determine_key("rounded-lg"))  # Output: border-radius
