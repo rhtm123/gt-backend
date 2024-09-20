@@ -44,24 +44,27 @@ def get_creator(creator_info: Optional[int]):
         return None
     else:  # Assume it's a username
         return get_object_or_404(User, id=creator_info)
-    
 
 @router.get("/projects", response=PaginatedResponseSchema)
 # @paginate(PageNumberPagination)
-def projects(request, page: int = Query(1), page_size: int = Query(10), creator_id: int = Query(None)):
+def projects(request, page: int = Query(1), page_size: int = Query(10), creator_id: int = Query(None), ordering: str = None):
     qs = Project.objects.all()
 
     page_number = request.GET.get('page', 1)
     page_size = request.GET.get('page_size', 10)
 
+
     if creator_id:
         qs = qs.filter(creator=creator_id)
+    
+    if ordering:
+        qs = qs.order_by(ordering)
     return paginate_queryset(request, qs, ProjectSchemaOut, page_number, page_size)
 
 
 @router.post("/projects/", response=ProjectSchemaOut)
 def create_project(request, data: ProjectSchemaIn):
-    print(data)
+    # print(data)
     creator = get_creator(data.creator)
 
     if data.jsondom is None:
@@ -95,7 +98,7 @@ def project(request, project_id: int):
 
 @router.put("/projects/{project_id}/", response=ProjectSchemaOut)
 def update_project(request, project_id: int, data: ProjectSchemaIn):
-    print(data)
+    # print(data)
     project = get_object_or_404(Project, id=project_id)
     
     if data.name is not None:
@@ -120,10 +123,12 @@ def delete_project(request, project_id: int):
 
 @router.get("/builders", response=PaginatedResponseSchema)
 # @paginate(PageNumberPagination)
-def builders(request, page: int = Query(1), page_size: int = Query(10), creator_id: int = Query(None)):
+def builders(request, page: int = Query(1), page_size: int = Query(10), creator_id: int = Query(None),is_published: bool = None):
     qs = Builder.objects.all()
     if creator_id is not None:
         qs = qs.filter(creator=creator_id)
+    if is_published is not None:
+        qs = qs.filter(is_published=is_published)
     page_number = request.GET.get('page', 1)
     page_size = request.GET.get('page_size', 10)
 

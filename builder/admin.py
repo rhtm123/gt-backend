@@ -5,8 +5,27 @@ from django.contrib import admin
 from .models import Builder, Project, ClassAllValues
 
 
-admin.site.register(Builder)
+class BuilderAdmin(admin.ModelAdmin):
 
-admin.site.register(Project)
+    def creator_(self, obj):
+        return obj.creator.username
+    list_display = ("name", "creator_", "created")
+    list_filter = ("creator",)
+
+
+admin.site.register(Builder, BuilderAdmin)
+
+
+class ProjectAdmin(admin.ModelAdmin):
+
+    def creator_(self, obj):
+        return obj.creator.username
+    list_display = ("name", "creator_", "created")
+    list_filter = ("creator",)
+
+
+admin.site.register(Project, ProjectAdmin)
+
+
 
 admin.site.register(ClassAllValues)
