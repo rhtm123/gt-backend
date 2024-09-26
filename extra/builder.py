@@ -21,7 +21,7 @@ def determine_key(class_name):
         "inline-table": "display",
         "table-row": "display",
         "table-cell": "display",
-        "hidden": "display"
+        # "hidden": "display"
     }
 
     if class_name in special_cases:
