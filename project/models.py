@@ -91,7 +91,6 @@ class ProjectPackage(models.Model):
 
 
     def __str__(self):
-
         if self.package:
             return self.project.name + " " + self.package.name
         else:
@@ -105,7 +104,28 @@ class ProjectPackage(models.Model):
             except:
                 pass 
 
+        if self.pk:  # Only update if the instance already exists
+            old_coupon = ProjectPackage.objects.get(pk=self.pk).coupon
+            # print(old_coupon)
+            # print(self.coupon)
+            if old_coupon != self.coupon:
+                newprice = 0
+                # If the coupon has changed, update all related ProjectPackageService instances
+                for projectservice in ProjectPackageService.objects.filter(project_package=self):
+                    price = projectservice.service.price
+                    if self.coupon:
+                        discount = self.coupon.discount
+                        projectservice.price = price * (100 - discount) / 100
+                    else:
+                        projectservice.price = price
+                    # print(projectservice.price);
+                    newprice = newprice + projectservice.price
+                    projectservice.save()
+                    # print("Project Service Saved")
+                self.price = newprice
+
         super(ProjectPackage, self).save(*args, **kwargs)
+
 
 @receiver(pre_delete, sender=ProjectPackage)
 def handle_project_package_delete(sender, instance, **kwargs):
@@ -139,7 +159,8 @@ class ProjectPackageService(models.Model):
                 self.price = price
                 package.price = package.price + price
             package.save()
-            super(ProjectPackageService, self).save(*args, **kwargs)
+        
+        super(ProjectPackageService, self).save(*args, **kwargs)            
 
     def delete(self, using=None, keep_parents=False):
 
