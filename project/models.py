@@ -91,7 +91,11 @@ class ProjectPackage(models.Model):
 
 
     def __str__(self):
-        return self.project.name + " " + self.package.name
+
+        if self.package:
+            return self.project.name + " " + self.package.name
+        else:
+            return self.project.name
     
     def save(self, *args, **kwargs):
         if self.project.domain:
@@ -126,10 +130,14 @@ class ProjectPackageService(models.Model):
     def save(self, *args, **kwargs):
         if self.pk is None:
             package = self.project_package
-            price = self.service.price 
-            discount = self.project_package.coupon.discount
-            self.price = price*(100-discount)/100
-            package.price = package.price + price*(100-discount)/100
+            price = self.service.price
+            if (self.project_package.coupon):
+                discount = self.project_package.coupon.discount
+                self.price = price*(100-discount)/100
+                package.price = package.price + price*(100-discount)/100
+            else:
+                self.price = price
+                package.price = package.price + price
             package.save()
             super(ProjectPackageService, self).save(*args, **kwargs)
 
