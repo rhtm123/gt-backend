@@ -21,6 +21,10 @@ def paginate_queryset(request, queryset, schema: Type[T], page_number: int = 1, 
 
     # Build the base URL without query parameters
     base_url = request.build_absolute_uri(request.path)
+
+    if base_url.startswith('http://'):
+        base_url = base_url.replace('http://', 'https://', 1)
+        
     next_url = f"{base_url}?page={page_obj.next_page_number()}" if page_obj.has_next() else None
     previous_url = f"{base_url}?page={page_obj.previous_page_number()}" if page_obj.has_previous() else None
 
