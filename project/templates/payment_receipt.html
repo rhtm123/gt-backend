@@ -167,7 +167,8 @@
             <h2>Payment Receipt</h2>
         </div>
         <div class="details">
-            <p><strong>To:</strong> {{ project_package.project.name }}</p>
+            <p><strong>To:</strong> {{ project_package.project.client.first_name }} {{ project_package.project.client.last_name }}</p>
+            <p><strong>Project Name:</strong> {{ project_package.project.name }}</p>
             <p><strong>Purchase ID:</strong> #{{ project_package.id }} </p>
         </div>
 

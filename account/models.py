@@ -12,5 +12,8 @@ class Account(models.Model):
     domain_name = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return self.user.username
+        if self.user.firstname and self.user.lastname:
+            return self.user.firstname +" " +self.user.lastname
+        else:
+            return self.user.username
     
