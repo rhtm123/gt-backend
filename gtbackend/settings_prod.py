@@ -4,21 +4,21 @@ from gtbackend.settings import *
 CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ALLOWED_ORIGINS = [
-    'https://www.growtechlab.com/',
-    'https://cms.growtechlab.com/',
+    'https://www.growtechlab.com',
+    'https://cms.growtechlab.com',
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    'https://www.growtechlab.com/',
-    'https://cms.growtechlab.com/',
+    'https://www.growtechlab.com',
+    'https://cms.growtechlab.com',
 ]
 
 
-ALLOWED_HOSTS = ["gt.thelearningsetu.com",'growtech.up.railway.app']
+ALLOWED_HOSTS = ['127.0.0.1', "gt.thelearningsetu.com",'growtech.up.railway.app']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://gt.thelearningsetu.com',
-    'growtech.up.railway.app',
+    'https://growtech.up.railway.app',
     # Add other domains as needed
 ]
 
