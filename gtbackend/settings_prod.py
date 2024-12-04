@@ -14,10 +14,11 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 
-ALLOWED_HOSTS = ["gt.thelearningsetu.com",]
+ALLOWED_HOSTS = ["gt.thelearningsetu.com",'growtech.up.railway.app']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://gt.thelearningsetu.com',
+    'growtech.up.railway.app',
     # Add other domains as needed
 ]
 
