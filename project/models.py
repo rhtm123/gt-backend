@@ -175,14 +175,14 @@ class ProjectPackageService(models.Model):
 
 PAYMENT_MODE = [
     ('online', 'online'),
-    ('offline', 'offline'),
+    ('cash', 'cash'),
 ]
 
 class ProjectPackagePayment(models.Model):
     project_package = models.ForeignKey(ProjectPackage, on_delete=models.CASCADE)
     amount = models.IntegerField()
 
-    # mode = models.CharField(max_length=255, choices=PAYMENT_MODE, null=True, blank=True)
+    mode = models.CharField(max_length=255, choices=PAYMENT_MODE, null=True, blank=True)
     due_date = models.DateField()
 
     recieve_date = models.DateField(null=True, blank=True)
