@@ -26,15 +26,6 @@ class Package(models.Model):
 
     def __str__(self):
         return self.name
-    
-# class Coupon(models.Model):
-#     name = models.CharField(max_length=255)
-#     discount = models.IntegerField(null=True, blank=True) # percent
-
-#     def __str__(self):
-#         return self.name
-    
-
 
 class Technology(models.Model):
     # icon = models.TextField(null=True, blank=True) # URL of an image

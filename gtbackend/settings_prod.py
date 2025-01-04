@@ -1,17 +1,17 @@
 from gtbackend.settings import *
 
 # ALLOWED_HOSTS = ['15.206.123.92','backend.growtechlab.com','growtechlab.com', 'growtechlab.support']
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 
-CORS_ALLOWED_ORIGINS = [
-    'https://www.growtechlab.com',
-    'https://cms.growtechlab.com',
-]
+# CORS_ALLOWED_ORIGINS = [
+#     'https://www.growtechlab.com',
+#     'https://cms.growtechlab.com',
+# ]
 
-CORS_ORIGIN_WHITELIST = [
-    'https://www.growtechlab.com',
-    'https://cms.growtechlab.com',
-]
+# CORS_ORIGIN_WHITELIST = [
+#     'https://www.growtechlab.com',
+#     'https://cms.growtechlab.com',
+# ]
 
 
 ALLOWED_HOSTS = ['127.0.0.1', "gt.thelearningsetu.com",'growtech.up.railway.app']
@@ -21,7 +21,6 @@ CSRF_TRUSTED_ORIGINS = [
     'https://growtech.up.railway.app',
     # Add other domains as needed
 ]
-
 
 
 

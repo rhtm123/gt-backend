@@ -28,9 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ["*"]
-
 CORS_ORIGIN_ALLOW_ALL = True
-
 
 
 # Application definition
@@ -52,6 +50,7 @@ INSTALLED_APPS = [
     'coupon.apps.CouponConfig',
     "builder.apps.BuilderConfig",
     "version.apps.VersionConfig",
+    "domain.apps.DomainConfig",
 ]
 
 MIDDLEWARE = [
@@ -64,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'domain.middleware.CustomCORSValidationMiddleware',
 ]
 
 ROOT_URLCONF = 'gtbackend.urls'
