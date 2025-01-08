@@ -31,6 +31,15 @@ ALLOWED_HOSTS = ["*"]
 CORS_ORIGIN_ALLOW_ALL = True
 
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS = 1
+EMAIL_USE_SSL = False
+EMAIL_PORT = 587
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -51,6 +60,7 @@ INSTALLED_APPS = [
     "builder.apps.BuilderConfig",
     "version.apps.VersionConfig",
     "domain.apps.DomainConfig",
+    "extra_api.apps.ExtraApiConfig",
 ]
 
 MIDDLEWARE = [

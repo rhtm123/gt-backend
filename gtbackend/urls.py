@@ -30,6 +30,8 @@ from builder.api import router as builder_api
 from account.api import router as account_api
 from version.api import router as version_api
 
+from extra_api.api import router as extra_api
+
 from ninja import NinjaAPI
 
 api = NinjaAPI()
@@ -40,6 +42,7 @@ api.add_router("project/", project_router)
 api.add_router("builder/", builder_api)
 api.add_router("user/", account_api)
 api.add_router("version/", version_api)
+api.add_router("extra_api/", extra_api)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

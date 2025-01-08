@@ -229,7 +229,7 @@
                 <td>#{{ payment.id }}</td>
 
                 <td>{{ payment.due_date }}</td>
-                <td>Cash</td>
+                <td>{{ payment.mode }}</td>
                 <td>₹{{ payment.amount }}</td>
                 <td>
                     {% if payment.is_paid %}
