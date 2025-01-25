@@ -36,6 +36,8 @@ DATABASES = {
         }
 }
 
+MIDDLEWARE += ['domain.middleware.CustomCORSValidationMiddleware']
+
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': config('CLN_CLOUD_NAME'),
     'API_KEY': config('CLN_API_KEY'),
